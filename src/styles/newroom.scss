@@ -1,0 +1,89 @@
+#page-newroom {
+  display: flex;
+  height: 100vh;
+
+  aside {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+
+    width: 50vw;
+    height: 100vh;
+    padding: 120px 88px;
+
+    background-color: #835afd;
+    color: white;
+    box-shadow: rgba(0, 0, 0, 0.5) 0px 5px 15px;
+
+    img {
+      max-width: 320px;
+    }
+
+    strong {
+      font: 700 36px "Poppins";
+      line-height: 42px;
+      margin-top: 16px;
+    }
+
+    p {
+      font: 500 24px "Roboto";
+      line-height: 42px;
+      margin-top: 16px;
+    }
+  }
+  main {
+    width: 50vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    .create-room {
+      display: flex;
+      flex-direction: column;
+
+      strong {
+        font: 700 24px "Poppins";
+        color: #333;
+      }
+    }
+    form {
+      width: 33%;
+      display: flex;
+      flex-direction: column;
+
+      input {
+        margin-top: 16px;
+        width: 100%;
+        padding: 8px 16px;
+
+        border-radius: 8px;
+        border: #a8a8b3 1px solid;
+
+        outline: none;
+      }
+      button {
+        margin-top: 16px;
+        background-color: #835afd;
+        padding: 12px 32px;
+        border: none;
+        border-radius: 8px;
+        color: #f8f8f8;
+        font: 500 16px "Roboto";
+        cursor: pointer;
+      }
+    }
+    .join-room {
+      margin-top: 16px;
+      span {
+        font: 500 12px "Poppins";
+        color: darkgray;
+      }
+      a {
+        font: 500 12px "Poppins";
+        color: gray;
+      }
+    }
+  }
+}
