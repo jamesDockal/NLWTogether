@@ -1,28 +1,27 @@
-import React from "react";
+import React, { useContext } from "react";
 
 import { useHistory } from "react-router-dom";
-import { firebase } from "../firebase";
 
 import illustration from "../assets/illustration.svg";
 import logoimg from "../assets/logo.svg";
 import googleicon from "../assets/google-icon.svg";
 
 import "../styles/home.scss";
+import { UserContext } from "../context/userContext";
 
 export default function Home() {
   const history = useHistory();
 
-  const googleLogin = async () => {
-    const provider = new firebase.auth.GoogleAuthProvider();
+  const { singInWithGoogle } = useContext(UserContext);
 
-    firebase
-      .auth()
-      .signInWithPopup(provider)
-      .then((result) => {
-        console.log("user", result.user?.displayName);
-        history.push("/rooms/new");
-      })
-      .catch((e) => console.log(e));
+  const handleLogin = async () => {
+    try {
+      await singInWithGoogle();
+    } catch (e) {
+      alert("e");
+    }
+
+    history.push("/rooms/new");
   };
 
   return (
@@ -35,7 +34,7 @@ export default function Home() {
       <main>
         <div className="create-room">
           <img src={logoimg} alt="logoimg" />
-          <button onClick={() => googleLogin()}>
+          <button onClick={() => handleLogin()}>
             <img src={googleicon} />
             Crie sua sala com o Google
           </button>
