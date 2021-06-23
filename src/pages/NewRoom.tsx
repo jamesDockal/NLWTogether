@@ -1,4 +1,8 @@
-import React from "react";
+import React, { FormEvent, useState } from "react";
+import { useHistory } from "react-router-dom";
+import { firebase } from "../firebase";
+
+import ContextUser from "../hooks/userHook";
 
 import illustration from "../assets/illustration.svg";
 import logoimg from "../assets/logo.svg";
@@ -6,6 +10,25 @@ import logoimg from "../assets/logo.svg";
 import "../styles/newroom.scss";
 
 export default function NewRoom() {
+  const { user } = ContextUser();
+  const [newRoom, setNewRoom] = useState("");
+
+  const history = useHistory();
+
+  const handleSubmit = async (event: FormEvent) => {
+    event.preventDefault();
+
+    const roomRef = await firebase.database().ref("rooms");
+
+    const firebaseRoom = await roomRef.push({
+      title: newRoom,
+      author: user?.email,
+    });
+
+    history.push(`/room/${firebaseRoom.key}`);
+
+    console.log(firebaseRoom);
+  };
   return (
     <div id="page-newroom">
       <aside>
@@ -19,8 +42,13 @@ export default function NewRoom() {
           <strong>Crie uma nova sala</strong>
         </div>
 
-        <form>
-          <input type="text" placeholder="digite seu email" />
+        <form onSubmit={(event) => handleSubmit(event)}>
+          <input
+            onChange={(event) => setNewRoom(event.target.value)}
+            value={newRoom}
+            type="text"
+            placeholder="Digite o nome da sala"
+          />
           <button>Criar sala</button>
         </form>
         <div className="join-room">

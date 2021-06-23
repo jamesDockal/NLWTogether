@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useState, useEffect } from "react";
 
 import { firebase } from "../firebase";
 
@@ -11,7 +11,7 @@ type User = {
 
 type UserContextProps = {
   user: User | undefined;
-  singInWithGoogle: () => void;
+  singInWithGoogle: () => Promise<void>;
 };
 
 export const UserContext = createContext({} as UserContextProps);
@@ -19,33 +19,47 @@ export const UserContext = createContext({} as UserContextProps);
 export function UserProvider({ children }: any) {
   const [user, setUser] = useState<User>();
 
+  useEffect(() => {
+    const unsubscribe = firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        const { uid, displayName, email, photoURL } = user;
+        if (!uid || !displayName || !email || !photoURL) {
+          throw new Error("Missing information of Google Account");
+        }
+
+        setUser({
+          uid: uid,
+          name: displayName,
+          email: email,
+          avatar: photoURL,
+        });
+      }
+    });
+    return () => {
+      unsubscribe();
+    };
+  }, []);
+
   async function singInWithGoogle() {
     const provider = new firebase.auth.GoogleAuthProvider();
 
-    await firebase
-      .auth()
-      .signInWithPopup(provider)
-      .then((result) => {
-        if (result.user) {
-          const { uid, displayName, email, photoURL } = result.user;
+    const result = await firebase.auth().signInWithPopup(provider);
 
-          if (!uid || !displayName || !email || !photoURL) {
-            throw new Error("Missing information of Google Account");
-          }
+    if (result.user) {
+      const { uid, displayName, email, photoURL } = result.user;
+      if (!uid || !displayName || !email || !photoURL) {
+        throw new Error("Missing information of Google Account");
+      }
 
-          setUser({
-            uid: uid,
-            name: displayName,
-            email: email,
-            avatar: photoURL,
-          });
-        } else {
-          throw new Error("Error to sign in");
-        }
-
-        console.log("user", result);
-      })
-      .catch((e) => console.log(e));
+      setUser({
+        uid: uid,
+        name: displayName,
+        email: email,
+        avatar: photoURL,
+      });
+    } else {
+      throw new Error("Error to sign in");
+    }
   }
 
   return (
