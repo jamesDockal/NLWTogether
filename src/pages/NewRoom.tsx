@@ -2,7 +2,7 @@ import React, { FormEvent, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { firebase } from "../firebase";
 
-import ContextUser from "../hooks/userHook";
+import useAuth from "../hooks/useAuth";
 
 import illustration from "../assets/illustration.svg";
 import logoimg from "../assets/logo.svg";
@@ -10,7 +10,7 @@ import logoimg from "../assets/logo.svg";
 import "../styles/newroom.scss";
 
 export default function NewRoom() {
-  const { user } = ContextUser();
+  const { user } = useAuth();
   const [newRoom, setNewRoom] = useState("");
 
   const history = useHistory();
@@ -53,7 +53,7 @@ export default function NewRoom() {
         </form>
         <div className="join-room">
           <span>Quer entrar em uma sala existente?</span>
-          <a href="#">Click aki</a>
+          <a href="#">Click aqui</a>
         </div>
       </main>
     </div>

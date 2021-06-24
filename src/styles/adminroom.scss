@@ -12,13 +12,12 @@ header {
 
     img {
       background-color: #835afd;
-      // width: 100%;
-      // height: 100%;
       border-top-left-radius: 16px;
       border-bottom-left-radius: 16px;
       padding: 8px;
     }
-    button {
+
+    .id-button {
       cursor: pointer;
       background-color: white;
       border: 1px solid rgba(131, 90, 253, 0.5);
@@ -26,6 +25,17 @@ header {
       border-bottom-right-radius: 16px;
       width: 300px;
       font: 700 16px "Poppins";
+    }
+    .delete-room {
+      cursor: pointer;
+      margin-left: 32px;
+      border: 2px solid #835afd;
+      background-color: transparent;
+      width: 200px;
+      border-radius: 16px;
+      font: 700 14px "Poppins";
+      color: #835afd;
+      box-shadow: rgba(0, 0, 0, 0.15) 0px 5px 15px;
     }
   }
 }
@@ -53,52 +63,6 @@ main {
       color: #f8f8f8;
     }
   }
-  form {
-    textarea {
-      width: 100%;
-      border: 0;
-      padding: 16px;
-      border-radius: 8px;
-      background-color: #f0f0f0;
-      box-shadow: rgba(0, 0, 0, 0.1) 0px 2px 12px;
-      resize: vertical;
-      min-height: 130px;
-      font: 500 20px "Roboto";
-    }
-    .form-fotter {
-      margin-top: 16px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-
-      .user-info {
-        display: flex;
-        align-items: center;
-        gap: 1rem;
-
-        img {
-          width: 50px;
-          height: 50px;
-          border-radius: 50%;
-          box-shadow: rgba(0, 0, 0, 0.2) 0px 5px 15px;
-        }
-      }
-
-      span {
-        color: gray;
-      }
-
-      button {
-        cursor: pointer;
-        font: 700 16px "Poppins";
-        color: #f8f8f8;
-        background-color: #835afd;
-        padding: 16px 20px;
-        border: none;
-        border-radius: 16px;
-      }
-    }
-  }
 }
 .all-questions {
   margin: 0 auto;
@@ -114,12 +78,8 @@ main {
       border: none;
     }
 
-    .not-liked path {
-      stroke: #835afd;
-      fill: white;
-    }
-
-    .has-liked path {
+    path {
+      stroke: white;
       fill: #835afd;
     }
   }

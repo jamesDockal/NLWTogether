@@ -1,7 +1,7 @@
 import React, { FormEvent, useState } from "react";
 import { firebase } from "../firebase";
 
-import ContextUser from "../hooks/userHook";
+import useAuth from "../hooks/useAuth";
 
 import { useHistory } from "react-router-dom";
 
@@ -13,7 +13,7 @@ import "../styles/home.scss";
 
 export default function Home() {
   const history = useHistory();
-  const { user, singInWithGoogle } = ContextUser();
+  const { user, singInWithGoogle } = useAuth();
 
   const [roomId, setRoomId] = useState("");
 
@@ -37,17 +37,16 @@ export default function Home() {
 
     if (roomId.trim() == "") return;
 
-    console.log(roomId)
+    console.log(roomId);
 
     // const roomRef = await firebase.database().ref(`rooms/${roomId}`).get()
-    const roomRef = await firebase.database().ref(`rooms/${roomId}`).get()
-    
-    console.log(roomRef.exists())
+    const roomRef = await firebase.database().ref(`rooms/${roomId}`).get();
 
-    if(!roomRef.exists()) return alert('Room doest exists!')
-    
-    history.push(`/room/${roomId}`)
+    console.log(roomRef.exists());
 
+    if (!roomRef.exists()) return alert("Room doest exists!");
+
+    history.push(`/room/${roomId}`);
   };
 
   return (

@@ -21,6 +21,8 @@ export function UserProvider({ children }: any) {
 
   useEffect(() => {
     const unsubscribe = firebase.auth().onAuthStateChanged((user) => {
+      console.log("on auths", user?.uid);
+
       if (user) {
         const { uid, displayName, email, photoURL } = user;
         if (!uid || !displayName || !email || !photoURL) {
