@@ -15,14 +15,16 @@ type QuestionType = {
 type QuestionTypeProps = {
   question: QuestionType;
   children?: ReactNode;
+  isAnswered?: boolean;
 };
 
 export default function QuestionCard({
   question,
   children,
+  isAnswered = false,
 }: QuestionTypeProps) {
   return (
-    <div className="question-card">
+    <div className={`question-card ${isAnswered ? "is-answered" : ""}`}>
       <strong>{question.content}</strong>
 
       <div className="card-info">

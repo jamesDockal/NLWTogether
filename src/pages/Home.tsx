@@ -35,7 +35,7 @@ export default function Home() {
   const handleJoinRoom = async (event: FormEvent) => {
     event.preventDefault();
 
-    if (roomId.trim() == "") return;
+    if (roomId.trim() === "") return;
 
     console.log(roomId);
 

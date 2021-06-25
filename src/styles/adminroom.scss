@@ -68,19 +68,41 @@ main {
   margin: 0 auto;
   width: 680px;
 
-  .like-container {
+  .buttons-container {
     display: flex;
-    align-items: flex-end;
+    align-items: center;
     gap: 8px;
 
     button {
-      cursor: pointer;
+      background-color: transparent;
       border: none;
+      cursor: pointer;
     }
 
-    path {
-      stroke: white;
-      fill: #835afd;
+    .check-button {
+      path {
+        stroke: #835afd;
+      }
+
+      circle {
+        stroke: #835afd;
+      }
+    }
+
+    .delete-button {
+      path {
+        fill: #835afd;
+      }
+    }
+
+    .like-button {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+
+      path {
+        fill: #835afd;
+      }
     }
   }
 }

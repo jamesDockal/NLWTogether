@@ -9,17 +9,20 @@ import "../styles/room.scss";
 import toast, { Toaster } from "react-hot-toast";
 
 import useAuth from "../hooks/useAuth";
+import useQuestion from "../hooks/useQuestion";
 import useRoom from "../hooks/useRoom";
 
 import QuestionCard from "../components/QuestionCard";
 
 export default function Room({ match }: any) {
+  const roomId = match.params.id;
   const { user } = useAuth();
   const [newQuestion, setNewQuestion] = useState("");
+  const room = useRoom(roomId);
 
-  const roomId = match.params.id;
+  console.log("room", room);
 
-  const allquestionsRoom = useRoom(roomId);
+  const allquestionsRoom = useQuestion(roomId);
 
   const copyRoomToClipboard = () => {
     toast.success("Copied!");
@@ -53,8 +56,6 @@ export default function Room({ match }: any) {
     questionId: string,
     likedId: string | undefined
   ) => {
-    console.log("likedId", likedId);
-
     if (likedId) {
       console.log("existe");
       await firebase
@@ -62,8 +63,6 @@ export default function Room({ match }: any) {
         .ref(`rooms/${roomId}/questions/${questionId}/likes/${likedId}`)
         .remove();
     } else {
-      console.log("nao existe");
-
       await firebase
         .database()
         .ref(`rooms/${roomId}/questions/${questionId}/likes`)
@@ -85,7 +84,7 @@ export default function Room({ match }: any) {
       </header>
       <main>
         <div className="about">
-          <strong>Sala Teste</strong>
+          <strong>{room?.title}</strong>
           <div>{allquestionsRoom.length} pergunta(s)</div>
         </div>
         <form onSubmit={(event) => handleSubmit(event)}>
@@ -113,7 +112,6 @@ export default function Room({ match }: any) {
       </main>
       <div className="all-questions">
         {allquestionsRoom.map((question) => {
-          console.log(question);
           return (
             <QuestionCard key={question.id} question={question}>
               <div className="like-container">
